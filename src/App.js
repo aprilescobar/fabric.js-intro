@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { fabric } from 'fabric';
 
-function App() {
+const App = () => {
+  const [canvas, setCanvas] = useState('');
+
+  useEffect(()=> {
+    setCanvas(initCanvas())
+  }, [])
+
+  const initCanvas = () => (
+    new fabric.Canvas('canvas', {
+      height: 800,
+      width: 800,
+      backgroundColor: 'rgb(100,100,180)',
+      selectionColor: 'green'
+    })
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      Tuesday Practice
+      <canvas id="canvas"/>
     </div>
   );
 }
