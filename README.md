@@ -1,1 +1,1 @@
-Learning Fabric.js library# fabric.js-intro
+Learning the Fabric.js library
