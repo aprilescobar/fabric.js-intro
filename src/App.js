@@ -3,9 +3,8 @@ import { fabric } from 'fabric';
 
 const App = () => {
   const [canvas, setCanvas] = useState('');
+  const [imgURL, setImgURL] = useState('');
   
-  const pupImgUrl = 'https://cdn11.bigcommerce.com/s-89ffd/images/stencil/1280x1280/products/69946/233734/4977524588399_c5b078635c4e59ccba264b234103ec19__91013.1580785065.jpg?c=2?imbypass=on'
-
   useEffect(()=> {
     setCanvas(initCanvas());
   }, []);
@@ -30,17 +29,19 @@ const App = () => {
 
   const addImg = (url, canvi) => {
     new fabric.Image.fromURL(url, img => {
-      img.scale(0.25)
-      canvi.add(img)
-      canvi.renderAll()
+      img.scale(0.75);
+      canvi.add(img);
+      canvi.renderAll();
     })
+    setImgURL('')
   }
 
   return (
     <div>
       <h1>Fabric.js on React - fabric.Canvas('…')</h1>
       <button onClick={() => addRect(canvas)}>Rectangle</button>
-      <button onClick={() => addImg(pupImgUrl, canvas)}>Add Pup</button>
+      <input type="text" value={imgURL} onChange={ e => setImgURL(e.target.value)} />
+      <button onClick={() => addImg(imgURL, canvas)}>Add Image</button>
 
       <br/><br/>
       <canvas id="canvas"/>
