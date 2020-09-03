@@ -4,6 +4,7 @@ import { fabric } from 'fabric';
 const App = () => {
   const [canvas, setCanvas] = useState('');
   const [imgURL, setImgURL] = useState('');
+  const testText = 'Add Text'
   
   useEffect(()=> {
     initCanvas();
@@ -22,7 +23,9 @@ const App = () => {
     const rect = new fabric.Rect({
       height: 280,
       width: 200,
-      fill: 'yellow'
+      fill: 'yellow',
+      cornerColor: 'black',
+      cornerSize: 8
     });
     canvi.add(rect);
     canvi.renderAll();
@@ -38,7 +41,13 @@ const App = () => {
     setImgURL('');
   }
 
-
+  const addText = canvas => {
+    const txt = new fabric.Textbox(testText, {
+      shadow: 'rgba(0,0,0,0.3) 5px 5px 5px'
+    }) 
+    canvas.add(txt);
+    canvas.renderAll();
+  }
 
   return (
     <div>
@@ -49,6 +58,8 @@ const App = () => {
         <input type="text" value={imgURL} onChange={ e => setImgURL(e.target.value)} />
         <button>Add Image</button>
       </form>
+
+      <button onClick={() => addText(canvas)}>Add Textbox</button>
 
       <br/><br/>
       <canvas id="canvas"/>
