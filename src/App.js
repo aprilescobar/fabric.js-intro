@@ -6,16 +6,17 @@ const App = () => {
   const [imgURL, setImgURL] = useState('');
   
   useEffect(()=> {
-    setCanvas(initCanvas());
+    initCanvas();
   }, []);
 
-  const initCanvas = () => (
-    new fabric.Canvas('canvas', {
+  const initCanvas = () => {
+    const canvi = new fabric.Canvas('canvas', {
       height: 800,
       width: 800,
       backgroundColor: 'pink',
     })
-  );
+    setCanvas(canvi)
+  };
 
   const addRect = canvi => {
     const rect = new fabric.Rect({
@@ -27,21 +28,27 @@ const App = () => {
     canvi.renderAll();
   };
 
-  const addImg = (url, canvi) => {
+  const addImg = (e, url, canvi) => {
+    e.preventDefault();
     new fabric.Image.fromURL(url, img => {
       img.scale(0.75);
       canvi.add(img);
       canvi.renderAll();
-    })
-    setImgURL('')
+    });
+    setImgURL('');
   }
+
+
 
   return (
     <div>
       <h1>Fabric.js on React - fabric.Canvas('…')</h1>
       <button onClick={() => addRect(canvas)}>Rectangle</button>
-      <input type="text" value={imgURL} onChange={ e => setImgURL(e.target.value)} />
-      <button onClick={() => addImg(imgURL, canvas)}>Add Image</button>
+      
+      <form onSubmit={e => addImg(e, imgURL, canvas)}>
+        <input type="text" value={imgURL} onChange={ e => setImgURL(e.target.value)} />
+        <button>Add Image</button>
+      </form>
 
       <br/><br/>
       <canvas id="canvas"/>
