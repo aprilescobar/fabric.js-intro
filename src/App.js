@@ -4,7 +4,7 @@ import { fabric } from 'fabric';
 const App = () => {
   const [canvas, setCanvas] = useState('');
   const [imgURL, setImgURL] = useState('');
-  const testText = 'Add Text'
+  // const [canviObjects, setCanviObjects] = useState([])
   
   useEffect(()=> {
     initCanvas();
@@ -16,7 +16,7 @@ const App = () => {
       width: 800,
       backgroundColor: 'pink',
     })
-    setCanvas(canvi)
+    setCanvas(canvi);
   };
 
   const addRect = canvi => {
@@ -29,6 +29,7 @@ const App = () => {
     });
     canvi.add(rect);
     canvi.renderAll();
+    // setCanviObjects([...canviObjects, rect])
   };
 
   const addImg = (e, url, canvi) => {
@@ -37,16 +38,27 @@ const App = () => {
       img.scale(0.75);
       canvi.add(img);
       canvi.renderAll();
+      setImgURL('');
+      // setCanviObjects([...canviObjects, img])
     });
-    setImgURL('');
   }
 
   const addText = canvas => {
-    const txt = new fabric.Textbox(testText, {
-      shadow: 'rgba(0,0,0,0.3) 5px 5px 5px'
+    const txt = new fabric.Textbox('Add Text', {
+      shadow: 'rgba(0,0,0,0.3) 5px 5px 5px',
+      height: 200,
+      width: 300
     }) 
     canvas.add(txt);
     canvas.renderAll();
+    // setCanviObjects([...canviObjects, txt])
+  }
+
+  const clearAll = canvas => canvas.getObjects().forEach(obj => canvas.remove(obj))
+
+  const canviEvents = canvas => {
+    canvas.renderAll()
+    console.log(canvas.getObjects())
   }
 
   return (
@@ -60,7 +72,11 @@ const App = () => {
       </form>
 
       <button onClick={() => addText(canvas)}>Add Textbox</button>
+      <button onClick={() => clearAll(canvas)}>Clear All</button>
+      <button onClick={() => canviEvents(canvas)}>Test</button>
 
+      {/* {console.log(canviObjects)} */}
+      
       <br/><br/>
       <canvas id="canvas"/>
     </div>
