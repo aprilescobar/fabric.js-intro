@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
+import './App.css'
 
 const App = () => {
   const [canvas, setCanvas] = useState('');
   const [imgURL, setImgURL] = useState('');
   // const [canviObjects, setCanviObjects] = useState([])
+
+  const buttonStyle = 'btn btn-default';
   
   useEffect(()=> {
     initCanvas();
@@ -62,23 +65,27 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Fabric.js on React - fabric.Canvas('…')</h1>
-      <button onClick={() => addRect(canvas)}>Rectangle</button>
-      
-      <form onSubmit={e => addImg(e, imgURL, canvas)}>
-        <input type="text" value={imgURL} onChange={ e => setImgURL(e.target.value)} />
-        <button>Add Image</button>
+
+      <div className="tool-bar">
+        <button className={buttonStyle} onClick={() => addRect(canvas)}>Rectangle</button>
+        <button className={buttonStyle} onClick={() => addText(canvas)}>Add Textbox</button>
+        <button className={buttonStyle} onClick={() => clearAll(canvas)}>Clear All</button>
+        <button className={buttonStyle} onClick={() => canviEvents(canvas)}>Test</button>
+      </div>
+
+      <form className="form-inline" onSubmit={e => addImg(e, imgURL, canvas)}>
+        <div className="col-xs-3">
+          <input type="text" className="form-control input-sm" value={imgURL} onChange={ e => setImgURL(e.target.value)} />
+          <button className={buttonStyle} type="submit">Add Image</button>
+        </div>
       </form>
-
-      <button onClick={() => addText(canvas)}>Add Textbox</button>
-      <button onClick={() => clearAll(canvas)}>Clear All</button>
-      <button onClick={() => canviEvents(canvas)}>Test</button>
-
-      {/* {console.log(canviObjects)} */}
       
       <br/><br/>
-      <canvas id="canvas"/>
+      <div className="canvas">
+        <canvas id="canvas"/>
+      </div>
     </div>
   );
 }
