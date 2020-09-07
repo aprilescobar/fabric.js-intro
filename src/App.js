@@ -5,7 +5,6 @@ import './App.css'
 const App = () => {
   const [canvas, setCanvas] = useState('');
   const [imgURL, setImgURL] = useState('');
-  // const [canviObjects, setCanviObjects] = useState([])
 
   const buttonStyle = 'btn btn-default';
   
@@ -27,22 +26,20 @@ const App = () => {
       height: 280,
       width: 200,
       fill: 'yellow',
-      cornerColor: 'black',
-      cornerSize: 8
     });
+    custSelect(rect);
     canvi.add(rect);
     canvi.renderAll();
-    // setCanviObjects([...canviObjects, rect])
   };
 
   const addImg = (e, url, canvi) => {
     e.preventDefault();
     new fabric.Image.fromURL(url, img => {
       img.scale(0.75);
+      custSelect(img);
       canvi.add(img);
       canvi.renderAll();
       setImgURL('');
-      // setCanviObjects([...canviObjects, img])
     });
   }
 
@@ -52,16 +49,26 @@ const App = () => {
       height: 200,
       width: 300
     }) 
+    custSelect(txt);
     canvas.add(txt);
     canvas.renderAll();
-    // setCanviObjects([...canviObjects, txt])
   }
 
   const clearAll = canvas => canvas.getObjects().forEach(obj => canvas.remove(obj))
 
   const canviEvents = canvas => {
-    canvas.renderAll()
-    console.log(canvas.getObjects())
+    canvas.getObjects().forEach(obj => console.log(obj))
+  }
+
+  const custSelect = obj => {
+    return obj.set({
+      borderColor: 'black',
+      cornerColor: 'rgba(85,85,85)',
+      cornerSize: 10,
+      cornerStyle: 'circle',
+      borderDashArray: [5, 5],
+      transparentCorners: false,
+    })
   }
 
   return (
